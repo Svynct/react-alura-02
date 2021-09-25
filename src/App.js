@@ -36,11 +36,26 @@ function validarCPF(cpf) {
 
 function validarNome(nome) {
   let nomes = nome.split(" ");
+
+  for (let caractere of CaracteresEspeciais) {
+    if (nome.includes(caractere)) {
+      return {
+        valido: false,
+        texto: "O nome não pode ter caracteres especiais"
+      };
+    }
+  }
+
   if (nomes?.length > 1) {
-    console.log(nomes)
     return {
       valido: false,
       texto: "O nome não pode ter espaços em branco"
+    };
+  }
+  else if (nome === "") {
+    return {
+      valido: false,
+      texto: "O nome precisa ser preenchido"
     };
   }
   else {
@@ -50,5 +65,13 @@ function validarNome(nome) {
     };
   }
 }
+
+const CaracteresEspeciais = [
+  "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",  
+  "!", "@", "#", "$", "%", "&", "*", "(", ")", "-", 
+  "=", "_", "+", "{", "[", "}", "]", "/", "?", ";",
+  ":", ">", ".", ",", "<", "|", "¹", "²", "³", "£",
+  "¢", "¬", "'"
+];
 
 export default App;
