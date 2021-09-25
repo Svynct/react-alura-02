@@ -1,6 +1,7 @@
-import { Stepper, Typography, Step, StepLabel } from '@material-ui/core';
+import { Stepper, Step, StepLabel } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import DadosEntrega from './DadosEntrega';
+import DadosFim from './DadosFim';
 import DadosPessoais from './DadosPessoais';
 import DadosUsuario from './DadosUsuario';
 
@@ -16,7 +17,7 @@ function FormularioCadastro({ onSubmit }) {
     <DadosUsuario onSubmit={coletarDados} />,
     <DadosPessoais onSubmit={coletarDados} />,
     <DadosEntrega onSubmit={coletarDados} />,
-    <Typography variant="h5">Obrigado pelo Cadastro!!</Typography>
+    <DadosFim dadosColetados={dadosColetados} />
   ]
 
   function coletarDados(dados) {

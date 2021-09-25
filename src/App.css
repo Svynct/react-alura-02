@@ -36,3 +36,60 @@
     transform: rotate(360deg);
   }
 }
+
+h1 {
+  margin: 2rem 0 !important;
+}
+
+.MuiStepper-horizontal {
+  margin-bottom: 1rem !important;
+}
+
+.estado {
+  width: 20.3rem;
+  margin-left: 1rem !important;
+}
+
+.margin-top-1 {
+  margin-top: 1rem !important;
+}
+
+.margin-bottom-1 {
+  margin-bottom: 1rem !important;
+}
+
+.margin-bottom-3 {
+  margin-bottom: 3rem !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.badge {
+  background-color: #1976d2 !important;
+  border-radius: 0.4rem !important;
+  padding: 0.5rem 1rem;
+}
+
+.align-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.ft-25 {
+  font-size: 25px !important;
+}
+
+h4 {
+  color: #1976d2;
+}
+
+b {
+  color: #121212 !important;
+}

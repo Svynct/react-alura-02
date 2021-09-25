@@ -49,7 +49,8 @@ function DadosEntrega({ onSubmit }) {
         label="Estado"
         type="text"
         variant="outlined"
-        margin="normal" />
+        margin="normal"
+        className="estado" />
       <TextField
         value={cidade}
         onChange={(event) => { setCidade(event.target.value) }}
@@ -58,8 +59,9 @@ function DadosEntrega({ onSubmit }) {
         label="Cidade"
         type="text"
         variant="outlined"
-        margin="normal" />
-      <Button variant="contained" type="submit" color="primary" fullWidth>Finalizar Cadastro</Button>
+        margin="normal"
+        fullWidth />
+      <Button className="margin-top-1" variant="contained" type="submit" color="primary" fullWidth>Finalizar Cadastro</Button>
     </form>
   );
 }

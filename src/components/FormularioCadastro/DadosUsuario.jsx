@@ -12,7 +12,7 @@ function DadosUsuario({ onSubmit }) {
   return (
     <form onSubmit={(event) => {
       event.preventDefault();
-      if(possoEnviar()) onSubmit({ email, senha });
+      if (possoEnviar()) onSubmit({ email, senha });
     }}>
       <TextField
         value={email}
@@ -38,7 +38,7 @@ function DadosUsuario({ onSubmit }) {
         variant="outlined" margin="normal"
         fullWidth
         required />
-      <Button variant="contained" type="submit">Próximo</Button>
+      <Button className="margin-top-1" variant="contained" type="submit" fullWidth>Próximo</Button>
     </form>
   );
 }
