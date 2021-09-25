@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <Container component="article" maxWidth="sm">
         <Typography variant="h3" component="h1" align="center">Formulário de Cadastro</Typography>
-        <FormularioCadastro onSubmit={enviarForm} validarCPF={validarCPF}/>
+        <FormularioCadastro onSubmit={enviarForm} validarCPF={validarCPF} validarNome={validarNome} />
       </Container>
     );
   }
@@ -31,6 +31,23 @@ function validarCPF(cpf) {
       valido: true,
       texto: ""
     }
+  }
+}
+
+function validarNome(nome) {
+  let nomes = nome.split(" ");
+  if (nomes?.length > 1) {
+    console.log(nomes)
+    return {
+      valido: false,
+      texto: "O nome não pode ter espaços em branco"
+    };
+  }
+  else {
+    return {
+      valido: true,
+      texto: ""
+    };
   }
 }
 
