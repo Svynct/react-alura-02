@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <Container component="article" maxWidth="sm">
         <Typography variant="h3" component="h1" align="center">Formulário de Cadastro</Typography>
-        <FormularioCadastro onSubmit={enviarForm} validarCPF={validarCPF} validarNome={validarNome} />
+        <FormularioCadastro onSubmit={enviarForm} validarCPF={validarCPF} validarNome={validarNome} validarSobrenome={validarSobrenome} />
       </Container>
     );
   }
@@ -37,16 +37,15 @@ function validarCPF(cpf) {
 function validarNome(nome) {
   let nomes = nome.split(" ");
 
-  for (let caractere of CaracteresEspeciais) {
-    if (nome.includes(caractere)) {
-      return {
-        valido: false,
-        texto: "O nome não pode ter caracteres especiais"
-      };
-    }
-  }
+  let invalido = validarCaracteresEspeciais(nome);
 
-  if (nomes?.length > 1) {
+  if (invalido) {
+    return {
+      valido: false,
+      texto: "O nome não pode ter caracteres especiais"
+    };
+  }
+  else if (nomes?.length > 1) {
     return {
       valido: false,
       texto: "O nome não pode ter espaços em branco"
@@ -64,6 +63,32 @@ function validarNome(nome) {
       texto: ""
     };
   }
+}
+
+function validarSobrenome(sobrenome) {
+  const invalido = validarCaracteresEspeciais(sobrenome);
+
+  if (invalido) {
+    return {
+      valido: false,
+      texto: "O sobrenome não pode ter caracteres especiais"
+    };
+  }
+  else {
+    return {
+      valido: true,
+      texto: ""
+    };
+  }
+}
+
+function validarCaracteresEspeciais(str) {
+  for (let caractere of CaracteresEspeciais) {
+    if (str.includes(caractere)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 const CaracteresEspeciais = [

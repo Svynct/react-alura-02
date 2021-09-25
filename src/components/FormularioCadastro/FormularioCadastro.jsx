@@ -1,7 +1,7 @@
 import { Button, FormControlLabel, Switch, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 
-function FormularioCadastro({ onSubmit, validarCPF, validarNome }) {
+function FormularioCadastro({ onSubmit, validarCPF, validarNome, validarSobrenome }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -9,6 +9,10 @@ function FormularioCadastro({ onSubmit, validarCPF, validarNome }) {
   const [novidades, setNovidades] = useState(true);
   const [erros, setErros] = useState({
     nome: {
+      valido: true,
+      texto: ""
+    },
+    sobrenome: {
       valido: true,
       texto: ""
     },
@@ -22,7 +26,23 @@ function FormularioCadastro({ onSubmit, validarCPF, validarNome }) {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit({ nome, sobrenome, cpf, novidades, promocoes });
+        if (!erros.nome.valido || !erros.sobrenome.valido || !erros.cpf.valido) {
+          onSubmit({ 
+            nome: {
+              valido: erros.nome.valido,
+              texto: erros.nome.texto
+            },
+            sobrenome: {
+              valido: erros.sobrenome.valido,
+              texto: erros.sobrenome.texto
+            },
+            cpf: {
+              valido: erros.cpf.valido,
+              texto: erros.cpf.texto
+            }
+          })
+        }
+        else onSubmit({ nome, sobrenome, cpf, novidades, promocoes });
       }}>
       <TextField
         value={nome}
@@ -37,7 +57,7 @@ function FormularioCadastro({ onSubmit, validarCPF, validarNome }) {
         variant="outlined" margin="normal"
         onBlur={(event) => {
           const valido = validarNome(event.target.value)
-          setErros({ nome: valido, cpf: erros.cpf })
+          setErros({ nome: valido, sobrenome: erros.sobrenome, cpf: erros.cpf })
         }}
         fullWidth />
 
@@ -46,10 +66,16 @@ function FormularioCadastro({ onSubmit, validarCPF, validarNome }) {
         onChange={(event) => {
           setSobrenome(event.target.value);
         }}
+        error={!erros.sobrenome.valido}
+        helperText={erros.sobrenome.texto}
         id="sobrenome"
         label="Sobrenome"
         placeholder="Escreva o seu sobrenome"
         variant="outlined" margin="normal"
+        onBlur={(event) => {
+          const valido = validarSobrenome(event.target.value)
+          setErros({ nome: erros.nome, sobrenome: valido, cpf: erros.cpf })
+        }}
         fullWidth />
 
       <TextField
@@ -65,7 +91,7 @@ function FormularioCadastro({ onSubmit, validarCPF, validarNome }) {
         variant="outlined" margin="normal"
         onBlur={(event => {
           const valido = validarCPF(event.target.value)
-          setErros({ nome: erros.nome, cpf: valido });
+          setErros({ nome: erros.nome, sobrenome: erros.sobrenome, cpf: valido });
         })}
         fullWidth />
 
