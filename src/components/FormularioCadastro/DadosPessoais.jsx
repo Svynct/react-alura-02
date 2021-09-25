@@ -1,31 +1,33 @@
 import { Button, FormControlLabel, Switch, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import ValidacoesCadastro from '../../context/ValidacoesCadastro';
+import useErros from '../../hooks/useErros';
 
-function DadosPessoais({ onSubmit, validarCPF }) {
+function DadosPessoais({ onSubmit }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({
-    cpf: {
-      valido: true,
-      texto: ""
-    }
-  });
+  const validacoes = useContext(ValidacoesCadastro);
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit({ nome, sobrenome, cpf, novidades, promocoes });
+        if (possoEnviar()) onSubmit({ nome, sobrenome, cpf, novidades, promocoes });
       }}>
       <TextField
         value={nome}
         onChange={(event) => {
           setNome(event.target.value);
         }}
+        onBlur={validarCampos}
+        error={!erros.nome.valido}
+        helperText={erros.nome.texto}
         id="nome"
+        name="nome"
         label="Nome"
         placeholder="Escreva o seu nome"
         variant="outlined" margin="normal"
@@ -37,6 +39,7 @@ function DadosPessoais({ onSubmit, validarCPF }) {
           setSobrenome(event.target.value);
         }}
         id="sobrenome"
+        name="sobrenome"
         label="Sobrenome"
         placeholder="Escreva o seu sobrenome"
         variant="outlined" margin="normal"
@@ -50,13 +53,11 @@ function DadosPessoais({ onSubmit, validarCPF }) {
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
         id="cpf"
+        name="cpf"
         label="CPF"
         placeholder="Escreva o seu cpf"
         variant="outlined" margin="normal"
-        onBlur={(event => {
-          const valido = validarCPF(event.target.value)
-          setErros({ cpf: valido });
-        })}
+        onBlur={validarCampos}
         fullWidth />
 
       <FormControlLabel label="Promoções"
